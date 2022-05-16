@@ -14,13 +14,13 @@ test_dir = 'data1a/validation'
 
 train_data = ImageDataGenerator(rescale = 1./255,shear_range = 0.2, zoom_range = 0.2, horizontal_flip = True)
 
-#defining training set, here size of image is reduced to 150x150, batch of images is kept as 128 and class is defined as 'categorical'.
+#определение обучающего набора, здесь размер изображения уменьшается до 150x150, пакет изображений сохраняется как 128, а класс определяется как "категориальный".
 training_set = train_data.flow_from_directory(train_dir, batch_size = 32, target_size = (64,64), class_mode = 'categorical')
 
-#applying same scale as training set, but only feature scaling is applied. image augmentation is avoided to prevent leakage of testing data.
+# применяется тот же масштаб, что и в обучающем наборе, но применяется только масштабирование объектов. увеличения изображения избегают, чтобы предотвратить утечку данных тестирования.
 test_data = ImageDataGenerator(rescale = 1./255)
 
-#defining testing set
+#определение тестового набора
 testing_set = test_data.flow_from_directory(test_dir, batch_size = 32, target_size = (64,64), class_mode = 'categorical')
 checkpoint = ModelCheckpoint(
     './base.model',
