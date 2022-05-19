@@ -78,17 +78,17 @@ history = model.fit(training_set,
 def show_final_history(history):
     fig, ax = plt.subplots(1, 2, figsize=(15,5))
     ax[0].set_title('loss')
-    ax[0].plot(history.epoch, history.history["loss"], label="Train loss")
-    ax[0].plot(history.epoch, history.history["val_loss"], label="Validation loss")
+    ax[0].plot(history.epoch, history.history["loss"], label="Тренировка с ошибками")
+    ax[0].plot(history.epoch, history.history["val_loss"], label="Проверка ошибок")
     ax[1].set_title('acc')
-    ax[1].plot(history.epoch, history.history["accuracy"], label="Train acc")
-    ax[1].plot(history.epoch, history.history["val_accuracy"], label="Validation acc")
+    ax[1].plot(history.epoch, history.history["accuracy"], label="Успешное обучение")
+    ax[1].plot(history.epoch, history.history["val_accuracy"], label="Проверка обучения")
     ax[0].legend()
     ax[1].legend()
 show_final_history(history)
 model.save("model.h5")
-print("Weights Saved")
-labels = ["00-damage","01-whole"]
+print("Модель записана")
+labels = ["00-поврежденная","01-целая"]
 
 it = iter(testing_set)
 batch = next(it) # Gets a batch of 16 test images
@@ -104,7 +104,7 @@ for i in range(3):
         net_input = image.reshape((1, 64, 64, 3))
         truth = np.argmax(batch[1][i*3+j])
         prediction = np.argmax(model.predict(net_input))
-        ax.set_title('Label: %s\nPrediction: %s' % (labels[truth].capitalize(), labels[prediction].capitalize()))
+        ax.set_title('Label: %s\nПредсказание: %s' % (labels[truth].capitalize(), labels[prediction].capitalize()))
         ax.imshow(image)
 def custom_predictions(path):
     img = ig.load_img(path, target_size=(64, 64))
